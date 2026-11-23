@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#102a43">
+<title>SignBridge — Communication for Everyone</title>
+<style>
+:root{--navy:#102a43;--blue:#2563eb;--teal:#0f9d8a;--gold:#f4b942;--ink:#18324b;--muted:#62758a;--paper:#f5f8fc;--white:#fff}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Arial,sans-serif;background:var(--paper);color:var(--ink)}
+header{background:linear-gradient(120deg,#102a43,#174b70 65%,#147d78);color:white;padding:20px max(5vw,20px) 76px;position:relative;overflow:hidden}
+header:after{content:"";position:absolute;width:360px;height:360px;border:1px solid #ffffff25;border-radius:50%;right:-90px;top:-160px;box-shadow:0 0 0 45px #ffffff0b,0 0 0 90px #ffffff08}
+nav{display:flex;justify-content:space-between;align-items:center;gap:16px;position:relative;z-index:1}.brand{font-weight:850;letter-spacing:.3px;font-size:1.2rem}.brand span{color:#7ee7d1}.navlinks{display:flex;gap:20px;flex-wrap:wrap}.navlinks a{color:#e5f4ff;text-decoration:none;font-size:.9rem}
+.hero{max-width:1100px;margin:65px auto 0;position:relative;z-index:1}.eyebrow{color:#8ce9d7;font-weight:800;text-transform:uppercase;letter-spacing:2px;font-size:.75rem}.hero h1{font-size:clamp(2.5rem,6vw,4.7rem);line-height:1.03;max-width:760px;margin:14px 0}.hero h1 em{font-style:normal;color:#8ce9d7}.hero p{max-width:650px;color:#e0edf7;font-size:1.1rem;line-height:1.7}.btn{display:inline-flex;align-items:center;justify-content:center;border:0;border-radius:14px;padding:13px 19px;background:var(--gold);color:#1d3145;font-weight:800;text-decoration:none;cursor:pointer}.btn.secondary{background:#e9f5ff;color:#16456a}.hero .btn{margin-top:12px}
+main{max-width:1100px;margin:-35px auto 0;padding:0 20px 70px;position:relative;z-index:2}.trust{background:white;border-radius:20px;padding:20px 24px;box-shadow:0 12px 35px #12334d12;display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap}.trust strong{font-size:1rem}.trust small{color:var(--muted)}
+section{padding-top:58px}.section-head{max-width:700px;margin-bottom:22px}.section-head .eyebrow{color:var(--teal)}h2{font-size:clamp(1.8rem,4vw,2.5rem);margin:8px 0;color:var(--navy)}.section-head p,.muted{color:var(--muted);line-height:1.65}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:17px}.card{background:white;border:1px solid #e5edf5;border-radius:20px;padding:22px;box-shadow:0 8px 24px #173b5910}.icon{width:48px;height:48px;border-radius:15px;background:#e8f6f5;display:grid;place-items:center;font-size:1.5rem}.card h3{margin:14px 0 7px;color:var(--navy)}.card p{margin:0;color:var(--muted);line-height:1.55;font-size:.95rem}
+.panel{background:white;border:1px solid #e3ebf3;border-radius:22px;padding:24px;box-shadow:0 12px 30px #173b590d}.tabs{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:18px}.tab{border:1px solid #dce6f0;background:#f5f8fc;color:#29445e;padding:10px 14px;border-radius:12px;font-weight:750;cursor:pointer}.tab.active{background:var(--navy);color:white;border-color:var(--navy)}
+.demo-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.demo-box{background:#f5f9fd;border-radius:17px;padding:20px;min-height:190px}.demo-box h3{margin-top:0}.field{width:100%;padding:13px 14px;border:1px solid #ccd9e5;border-radius:12px;font:inherit;background:white;color:var(--ink)}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}.actions .btn{padding:11px 14px}.result{margin-top:13px;background:white;border:1px dashed #b6c9da;border-radius:12px;padding:13px;min-height:50px;line-height:1.5}
+.phrase-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.phrase{border:1px solid #dce6f0;background:white;border-radius:14px;padding:14px 10px;text-align:center;font-weight:750;color:#23435e;cursor:pointer}.phrase span{display:block;font-size:1.7rem;margin-bottom:5px}
+.notice{font-size:.86rem;color:#64788c;background:#eef4f9;border-left:4px solid var(--gold);padding:13px 15px;border-radius:9px;line-height:1.55;margin-top:16px}
+.steps{counter-reset:step;display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.step{background:white;border-radius:17px;padding:20px;border:1px solid #e3ebf3}.step:before{counter-increment:step;content:counter(step);display:grid;place-items:center;width:32px;height:32px;border-radius:10px;background:#dff5ef;color:#087d6c;font-weight:900}
+footer{background:#0d2438;color:#d8e7f2;padding:35px 20px;text-align:center}footer p{margin:7px auto;max-width:700px;color:#a9c0d2;font-size:.9rem;line-height:1.6}
+select{padding:10px;border-radius:10px;border:1px solid #cbd8e5;background:white}
+@media(max-width:760px){.grid,.steps{grid-template-columns:1fr 1fr}.demo-grid{grid-template-columns:1fr}.navlinks{gap:10px}.hero{margin-top:45px}}
+@media(max-width:520px){.grid,.steps{grid-template-columns:1fr}.phrase-grid{grid-template-columns:1fr 1fr}.trust{align-items:flex-start}.navlinks{display:none}main{padding-left:14px;padding-right:14px}}
+</style>
+</head>
+<body>
+<header>
+<nav><div class="brand">✦ Sign<span>Bridge</span></div><div class="navlinks"><a href="#why">Why it matters</a><a href="#features">Features</a><a href="#try">Try the demo</a><a href="#gesture-ai">Live AI demo</a><a href="#criteria">Judging criteria</a><a href="#emergency">Quick phrases</a><a href="sign-language.html">Sign language page →</a></div></nav>
+<div class="hero">
+<div class="eyebrow">A more inclusive way to connect</div>
+<h1>Communication should have <em>no barriers.</em></h1>
+<p>SignBridge is a student-built accessibility prototype that helps people share everyday needs using pictures, written messages and spoken audio. It is designed to make communication easier when two people do not use the same communication method.</p>
+<a class="btn" href="#try">Try the communication demo&nbsp; →</a> <a class="btn secondary" href="#project-overview">Understand the project</a> <a class="btn secondary" href="sign-language.html">Explore sign-language page →</a>
+</div></header>
+<main>
+<section id="project-overview" style="padding-top:28px"><div class="panel"><div class="eyebrow">NIAT project overview</div><h2>What problem does SignBridge solve?</h2><p class="muted">In everyday places such as schools, clinics and public spaces, a person may find it difficult to communicate if they cannot speak, hear, read or type easily. SignBridge offers alternative ways to express common needs.</p><div class="grid"><div class="card"><div class="icon">🎯</div><h3>The problem</h3><p>People can struggle to make themselves understood when communication methods differ.</p></div><div class="card"><div class="icon">💡</div><h3>Our solution</h3><p>A simple website with picture choices, typed messages, spoken output and optional voice input.</p></div><div class="card"><div class="icon">🧪</div><h3>What this prototype proves</h3><p>It demonstrates accessible communication tools and a limited live AI hand-pose demo. It is a prototype, not a finished medical or sign-language translation system.</p></div></div><div class="notice"><strong>How judges can test it:</strong> Open “Try the demo”, choose Picture board, tap “I need water”, then try “Speak message”. Next, open “Live AI demo” and allow camera access to test the hand-pose recogniser.</div></div></section>
+<div class="trust"><div><strong>Designed for real everyday moments</strong><br><small>For deaf and hard-of-hearing people, people with speech difficulties, and people who prefer visual or audio support.</small></div><div>🌍 &nbsp; Accessible • Simple • Inclusive</div></div>
+<section id="why"><div class="section-head"><div class="eyebrow">The challenge</div><h2>Being understood should not depend on how we communicate.</h2><p>Communication can be difficult when people use different methods—sign language, speech, text or pictures. SignBridge explores ways to make everyday interactions easier in places such as schools, clinics and public spaces.</p></div>
+<div class="grid">
+<div class="card"><div class="icon">🤟</div><h3>Sign-language users</h3><p>Offer sign-learning resources and a future pathway for recognising a limited, carefully tested set of signs.</p></div>
+<div class="card"><div class="icon">🗣️</div><h3>People with speech difficulties</h3><p>Use large picture buttons and text-to-speech to express common needs without having to speak.</p></div>
+<div class="card"><div class="icon">👵</div><h3>Older adults & everyone</h3><p>Use clear layouts, large controls, audio support and simple phrases that are easier to navigate.</p></div>
+</div></section>
+<section id="features"><div class="section-head"><div class="eyebrow">What SignBridge brings together</div><h2>One platform. Multiple ways to communicate.</h2><p>Choose the method that works best for the person and the situation.</p></div>
+<div class="grid">
+<div class="card"><div class="icon">📷</div><h3>Live AI hand-pose demo</h3><p>Uses a pre-trained computer-vision model to identify a limited set of general hand poses. It does not translate Indian Sign Language.</p></div>
+<div class="card"><div class="icon">🎤</div><h3>Speech support</h3><p>Use speech recognition where the browser and language support it, then show the recognised words.</p></div>
+<div class="card"><div class="icon">🔊</div><h3>Text-to-speech</h3><p>Read typed or selected messages aloud using the device's available voice.</p></div>
+<div class="card"><div class="icon">🖼️</div><h3>Picture communication</h3><p>Tap a clear symbol and share a common need, such as water, help or a break.</p></div>
+<div class="card"><div class="icon">🎬</div><h3>Sign learning library</h3><p>A future library of verified Indian Sign Language videos, with clear labels and learning guidance.</p></div>
+<div class="card"><div class="icon">🚨</div><h3>Quick communication</h3><p>Large emergency and everyday phrases can be shown or spoken with one tap.</p></div>
+</div></section>
+<section id="try"><div class="section-head"><div class="eyebrow">Interactive prototype</div><h2>Try a communication tool</h2><p>This is the main working communication demo. Select a mode, try a message and see how a person can share a need without speaking.</p></div>
+<div class="panel">
+<div class="tabs"><button class="tab active" data-mode="type">⌨️ Type & speak</button><button class="tab" data-mode="picture">🖼️ Picture board</button><button class="tab" data-mode="voice">🎤 Voice input</button></div>
+<div id="typeMode" class="demo-grid">
+<div class="demo-box"><h3>Write a message</h3><textarea class="field" id="message" rows="4" placeholder="Type a short message here..."></textarea><div class="actions"><button class="btn" onclick="speakText()">🔊 Speak message</button><button class="btn secondary" onclick="clearMessage()">Clear</button></div></div>
+<div class="demo-box"><h3>Message preview</h3><p class="muted">Your message appears here in a clear, large format.</p><div class="result" id="preview" aria-live="polite">Your message will appear here.</div><div class="actions"><button class="btn secondary" onclick="showPreview()">Update preview</button></div></div>
+</div>
+<div id="pictureMode" class="demo-box" hidden><h3>Tap a picture to communicate</h3><div class="phrase-grid" id="pictureBoard"></div><div class="result" id="pictureResult" aria-live="polite">Choose a picture to create a message.</div></div>
+<div id="voiceMode" class="demo-grid" hidden><div class="demo-box"><h3>Speak a message</h3><p class="muted">If your browser supports speech recognition, tap the button and say a short phrase.</p><button class="btn" onclick="startListening()">🎙️ Start listening</button><div class="result" id="voiceStatus" aria-live="polite">Ready when you are.</div></div><div class="demo-box"><h3>Recognised words</h3><div class="result" id="voiceResult" aria-live="polite">Your recognised words will appear here.</div><div class="actions"><button class="btn secondary" onclick="speakVoiceResult()">🔊 Read aloud</button></div></div></div>
+<div class="notice"><strong>Prototype note:</strong> Camera-based sign recognition and automatic speech-to-sign translation are planned features, not active in this demo. Sign languages have their own grammar and regional variation; any sign library or recognition model must use verified resources and be tested with sign-language users. Do not rely on this prototype for emergencies or medical decisions.</div>
+</div></section>
+<section id="emergency"><div class="section-head"><div class="eyebrow">Quick phrase board</div><h2>Common messages, one tap away.</h2><p>Tap a phrase to display it and hear it spoken. These are communication aids, not emergency services.</p></div>
+<div class="panel"><div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:16px"><label for="lang"><strong>Voice language:</strong></label><select id="lang"><option value="en-IN">English (India)</option><option value="kn-IN">ಕನ್ನಡ (Kannada)</option><option value="hi-IN">हिन्दी (Hindi)</option></select></div><div class="phrase-grid" id="quickPhrases"></div><div class="result" id="quickResult" aria-live="polite">Select a phrase to see it here.</div></div></section>
+<section><div class="section-head"><div class="eyebrow">Our approach</div><h2>Built with people, not just for people.</h2><p>Accessibility tools should be designed alongside the people who will use them.</p></div><div class="steps"><div class="step"><h3>Listen first</h3><p class="muted">Ask users what situations are difficult and what support they prefer.</p></div><div class="step"><h3>Build carefully</h3><p class="muted">Use clear visuals, verified sign-language materials and privacy-conscious design.</p></div><div class="step"><h3>Test & improve</h3><p class="muted">Test with volunteers, fix confusing parts and explain the limits honestly.</p></div></div></section>
+</main>
+
+
+<section id="gesture-ai"><div class="section-head"><div class="eyebrow">Live AI demonstration</div><h2>Try the camera hand-gesture demo</h2><p>This uses an on-device computer-vision model to detect a small set of common hand poses in real time. It demonstrates the camera + AI interaction judges can test.</p></div>
+<div class="panel">
+<div class="demo-grid">
+<div class="demo-box">
+<h3>📷 Live camera</h3>
+<video id="gestureVideo" autoplay playsinline muted style="width:100%;max-height:320px;object-fit:cover;border-radius:14px;background:#102a43"></video>
+<div class="actions"><button class="btn" id="startGesture">Start camera demo</button><button class="btn secondary" id="stopGesture" disabled>Stop camera</button></div>
+<p class="muted" id="gestureStatus" aria-live="polite">Press “Start camera demo” and allow camera access.</p>
+</div>
+<div class="demo-box">
+<h3>✨ AI detection result</h3>
+<div class="result" id="gestureResult" style="font-size:1.2rem;font-weight:800;min-height:100px" aria-live="polite">Waiting for a hand gesture…</div>
+<p class="muted" id="gestureDetail">The model will show its detected hand-pose category and confidence score here.</p>
+</div>
+</div>
+<div class="notice"><strong>Accuracy and inclusion note:</strong> This demo recognises a limited set of general hand-pose categories using MediaPipe's pre-trained gesture model. These categories are NOT a validated Indian Sign Language (ISL) translator, and the displayed labels must not be treated as ISL meanings. Real sign-language translation needs a properly sourced ISL dataset, motion and two-hand context, expert validation and testing with sign-language users. Camera frames are processed in your browser; the camera is used only after you grant permission. Stop the camera when finished.</div>
+</div></section>
+
+<section id="judge-demo"><div class="section-head"><div class="eyebrow">See it work</div><h2>Try the live “wow” moment</h2><p>Choose a message below. SignBridge instantly displays it in a large, clear format and can speak it aloud. This makes the core idea easy for judges to test during the presentation.</p></div>
+<div class="panel"><div class="phrase-grid">
+<button class="phrase" onclick="demoWow('I need help')"><span>🆘</span>I need help</button>
+<button class="phrase" onclick="demoWow('Please call my family')"><span>📞</span>Call my family</button>
+<button class="phrase" onclick="demoWow('I need a doctor')"><span>🩺</span>I need a doctor</button>
+</div><div class="result" id="wowResult" style="font-size:1.35rem;font-weight:850;text-align:center;padding:22px" aria-live="polite">Tap any message to see SignBridge respond.</div><div class="actions"><button class="btn" onclick="speakWow()">🔊 Speak this message</button><button class="btn secondary" onclick="document.getElementById('wowResult').textContent='Tap any message to see SignBridge respond.'">Reset demo</button></div></div>
+<div class="notice"><strong>For the live judging demo:</strong> open the published link, scroll here, tap “I need help”, then press “Speak this message”. You can also show the picture board and language selector above.</div>
+</section>
+<section id="criteria"><div class="section-head"><div class="eyebrow">Designed around the NIAT judging criteria</div><h2>Four reasons this project matters</h2><p>Here is the project value in simple terms for reviewers and judges.</p></div>
+<div class="grid">
+<div class="card"><div class="icon">✨</div><h3>Wow factor</h3><p>Interactive picture buttons, instant message display, language switching and spoken output create a demo judges can try themselves.</p></div>
+<div class="card"><div class="icon">⚡</div><h3>Works live</h3><p>The published website link opens in a browser. The text, picture-board and text-to-speech interactions work on supported devices.</p></div>
+<div class="card"><div class="icon">💡</div><h3>Creative idea</h3><p>SignBridge combines sign-language learning, picture communication and voice support in one inclusive communication hub.</p></div>
+<div class="card"><div class="icon">🤝</div><h3>Real problem solved</h3><p>It helps people communicate common needs across different communication preferences, including in schools, clinics and public places.</p></div>
+</div></section>
+
+<footer><div class="brand">✦ Sign<span style="color:#7ee7d1">Bridge</span></div><p>Different ways to communicate. One platform to understand.</p><p>Student prototype • Created to explore inclusive communication technology.</p></footer>
+<script>
+const phrases=[
+ {icon:"💧",en:"I need water",kn:"ನನಗೆ ನೀರು ಬೇಕು",hi:"मुझे पानी चाहिए"},
+ {icon:"🆘",en:"I need help",kn:"ನನಗೆ ಸಹಾಯ ಬೇಕು",hi:"मुझे मदद चाहिए"},
+ {icon:"🩺",en:"I need a doctor",kn:"ನನಗೆ ವೈದ್ಯರು ಬೇಕು",hi:"मुझे डॉक्टर चाहिए"},
+ {icon:"📞",en:"Please call my family",kn:"ದಯವಿಟ್ಟು ನನ್ನ ಕುಟುಂಬಕ್ಕೆ ಕರೆ ಮಾಡಿ",hi:"कृपया मेरे परिवार को फोन करें"},
+ {icon:"🍽️",en:"I am hungry",kn:"ನನಗೆ ಹಸಿವಾಗಿದೆ",hi:"मुझे भूख लगी है"},
+ {icon:"🚻",en:"Where is the washroom?",kn:"ಶೌಚಾಲಯ ಎಲ್ಲಿದೆ?",hi:"शौचालय कहाँ है?"},
+ {icon:"😣",en:"I am not feeling well",kn:"ನನಗೆ ಆರೋಗ್ಯ ಸರಿಯಿಲ್ಲ",hi:"मेरी तबीयत ठीक नहीं है"},
+ {icon:"🪑",en:"I need to sit",kn:"ನನಗೆ ಕುಳಿತುಕೊಳ್ಳಬೇಕು",hi:"मुझे बैठना है"},
+ {icon:"🙏",en:"Please wait",kn:"ದಯವಿಟ್ಟು ಕಾಯಿರಿ",hi:"कृपया प्रतीक्षा करें"}
+];
+function currentLang(){return document.getElementById('lang').value}
+function phraseText(p){let l=currentLang();return l==='kn-IN'?p.kn:l==='hi-IN'?p.hi:p.en}
+function speak(text){if(!('speechSynthesis'in window)){alert('Text-to-speech is not available in this browser.');return}speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(text);u.lang=currentLang();speechSynthesis.speak(u)}
+function speakText(){let t=document.getElementById('message').value.trim();if(t)speak(t)}
+function clearMessage(){document.getElementById('message').value='';showPreview()}
+function showPreview(){document.getElementById('preview').textContent=document.getElementById('message').value.trim()||'Your message will appear here.'}
+document.getElementById('message').addEventListener('input',showPreview);
+function renderPhrases(){let q=document.getElementById('quickPhrases'),p=document.getElementById('pictureBoard');q.innerHTML='';p.innerHTML='';phrases.forEach(x=>{let label=phraseText(x);let b=document.createElement('button');b.className='phrase';b.innerHTML=`<span>${x.icon}</span>${label}`;b.onclick=()=>{document.getElementById('quickResult').textContent=label;speak(label)};q.appendChild(b);let c=b.cloneNode(true);c.onclick=()=>{document.getElementById('pictureResult').textContent=label;speak(label)};p.appendChild(c)})}
+document.getElementById('lang').addEventListener('change',renderPhrases);renderPhrases();
+document.querySelectorAll('.tab').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x===btn));let m=btn.dataset.mode;document.getElementById('typeMode').hidden=m!=='type';document.getElementById('pictureMode').hidden=m!=='picture';document.getElementById('voiceMode').hidden=m!=='voice'}));
+function startListening(){let SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){document.getElementById('voiceStatus').textContent='Speech recognition is not supported in this browser. Try a supported browser or use Type & Speak.';return}let r=new SR();r.lang=currentLang();r.interimResults=false;r.onstart=()=>document.getElementById('voiceStatus').textContent='Listening…';r.onresult=e=>{let t=e.results[0][0].transcript;document.getElementById('voiceResult').textContent=t;document.getElementById('voiceStatus').textContent='Message captured.'};r.onerror=e=>document.getElementById('voiceStatus').textContent='Could not capture speech: '+e.error;r.onend=()=>{};r.start()}
+let wowMessage='Tap any message to see SignBridge respond.';\nfunction demoWow(message){wowMessage=message;document.getElementById('wowResult').textContent=message}\nfunction speakWow(){if(wowMessage.startsWith('Tap any')){wowMessage='Please choose a message first.';document.getElementById('wowResult').textContent=wowMessage;return}speak(wowMessage)}\nfunction speakVoiceResult(){let t=document.getElementById('voiceResult').textContent;if(t&&t!=='Your recognised words will appear here.')speak(t)}
+</script>
+
+<script type="module">
+import { FilesetResolver, GestureRecognizer } from
+  "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision/vision_bundle.mjs";
+
+const videoEl = document.getElementById("gestureVideo");
+const startBtn = document.getElementById("startGesture");
+const stopBtn = document.getElementById("stopGesture");
+const statusEl = document.getElementById("gestureStatus");
+const resultEl = document.getElementById("gestureResult");
+const detailEl = document.getElementById("gestureDetail");
+let gestureRecognizer = null;
+let cameraStream = null;
+let animationFrame = null;
+let lastVideoTime = -1;
+let cameraRunning = false;
+
+async function loadGestureModel() {
+  if (gestureRecognizer) return gestureRecognizer;
+  statusEl.textContent = "Loading the AI hand-gesture model…";
+  const vision = await FilesetResolver.forVisionTasks(
+    "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision/wasm"
+  );
+  gestureRecognizer = await GestureRecognizer.createFromOptions(vision, {
+    baseOptions: {
+      modelAssetPath: "https://storage.googleapis.com/mediapipe-models/gesture_recognizer/gesture_recognizer/float16/1/gesture_recognizer.task",
+      delegate: "GPU"
+    },
+    runningMode: "VIDEO",
+    numHands: 2
+  });
+  return gestureRecognizer;
+}
+
+function detectLoop() {
+  if (!cameraRunning) return;
+  if (videoEl.readyState >= 2 && videoEl.currentTime !== lastVideoTime) {
+    lastVideoTime = videoEl.currentTime;
+    const result = gestureRecognizer.recognizeForVideo(videoEl, performance.now());
+    const categories = (result.gestures || []).flat();
+    if (categories.length) {
+      const best = categories.reduce((a, b) => b.score > a.score ? b : a);
+      const label = best.categoryName.replaceAll("_", " ");
+      resultEl.textContent = "Detected hand pose: " + label;
+      detailEl.textContent = "Model confidence: " + (best.score * 100).toFixed(1) + "%. This is a general hand-pose label, not an ISL translation.";
+    } else if (result.handLandmarks && result.handLandmarks.length) {
+      resultEl.textContent = "Hand detected";
+      detailEl.textContent = "The model sees a hand, but no supported pose category was confidently identified.";
+    } else {
+      resultEl.textContent = "No hand detected yet";
+      detailEl.textContent = "Move one hand into the camera view, with good lighting.";
+    }
+  }
+  animationFrame = requestAnimationFrame(detectLoop);
+}
+
+startBtn.addEventListener("click", async () => {
+  startBtn.disabled = true;
+  try {
+    if (!navigator.mediaDevices?.getUserMedia) {
+      throw new Error("Camera access is unavailable. Open this site using HTTPS in a modern browser.");
+    }
+    await loadGestureModel();
+    cameraStream = await navigator.mediaDevices.getUserMedia({
+      video: { facingMode: "user", width: { ideal: 640 }, height: { ideal: 480 } },
+      audio: false
+    });
+    videoEl.srcObject = cameraStream;
+    await videoEl.play();
+    cameraRunning = true;
+    lastVideoTime = -1;
+    startBtn.disabled = true;
+    stopBtn.disabled = false;
+    statusEl.textContent = "Camera is on. Hold a hand clearly in view.";
+    detectLoop();
+  } catch (err) {
+    statusEl.textContent = "Could not start: " + (err?.message || "Please check camera permission and internet connection.");
+    startBtn.disabled = false;
+  }
+});
+
+function stopCamera() {
+  cameraRunning = false;
+  if (animationFrame) cancelAnimationFrame(animationFrame);
+  if (cameraStream) cameraStream.getTracks().forEach(track => track.stop());
+  cameraStream = null;
+  videoEl.srcObject = null;
+  stopBtn.disabled = true;
+  startBtn.disabled = false;
+  statusEl.textContent = "Camera stopped.";
+  resultEl.textContent = "Camera demo stopped.";
+  detailEl.textContent = "Press Start camera demo when you are ready.";
+}
+stopBtn.addEventListener("click", stopCamera);
+window.addEventListener("pagehide", stopCamera);
+</script>
+
+</body></html>
